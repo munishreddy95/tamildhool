@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} www.kikikichannel.in
+RewriteRule (.*) http://kikikichannel.in/$1 [R=301,L]
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} www.yourwebsitehere.com
+RewriteRule (.*) http://yourwebsitehere.com/$1 [R=301,L]
+

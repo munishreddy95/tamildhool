@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% if datapage.pages > 1 %}
+<div class="row mb-1">
+    <div class="text-center">
+        {% if data1.has_prev %}
+        <a href="{{ url_for('gethometamilpages', page=data1.prev_num, _external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark {% if data1.page == 1 %}disabled{% endif %} border border-primary rounded">&laquo;
+            prev</a>
+        {% endif %}
+        {% for page_num in data1.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if page_num %}{% if data1.page == page_num %}<a
+            href="{{ url_for('gethometamilpages', page=page_num,_external=True)}}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-dark border border-primary rounded">{{ page_num }}</a>{% else %}<a
+            href="{{ url_for('gethometamilpages', page=page_num,_external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark border border-primary rounded">{{ page_num }}</a>{% endif %}{% else %} ...{%
+        endif %}
+        {% endfor %}
+        {% if data1.has_next %}
+        <a href="{{ url_for('gethometamilpages', page=data1.next_num,_external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark {% if data1.page == data1.pages %}disabled{% endif %} border border-primary rounded">next
+            &raquo; </a>
+        {% endif %}
+        <a class="btn mt-1">Showing page <button class="btn border border-primary rounded">{{ data1.page }}</button> of
+            <button class="btn border border-primary rounded">{{ data1.pages }}</button></a>
+    </div>
+</div>
+{% endif %}
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    {% for fetchVideo in data1.items %}
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-3 mb-5">
+            <div class="card h-100">
+                <a href="{{ url_for('homevideoview',videoid=fetchVideo.Id,urlslug=urlsluggenerator(fetchVideo.VideoTitle),_external=True) }}"><img class="card-img-top" src="{{fetchVideo.VideoImage}}" rel="bookmark" alt="{{fetchVideo.VideoTitle}}" /></a>
+                <div class="text-center">
+                    <h5>
+                        <a class="tbpagetitle" href="{{ url_for('homevideopage',videopageid=fetchVideo.videpagedetails.Id,pageid=1,urlslug=urlsluggenerator(fetchVideo.videpagedetails.PageName),_external=True) }}">{{fetchVideo.videpagedetails.PageName}}</a>
+                    </h5>
+                </div>
+                <div class="card-body px-1 py-0">
+                    <div class="text-center">
+                        <h5 class="fw-bolder">
+                            <a class="tbh6" rel="bookmark" href="{{ url_for('homevideoview',videoid=fetchVideo.Id,urlslug=urlsluggenerator(fetchVideo.VideoTitle),_external=True) }}">{{fetchVideo.VideoTitle}}</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% if datapage.pages > 1 %}
+<div class="row mb-1">
+    <div class="text-center">
+        {% if data1.has_prev %}
+        <a href="{{ url_for('gethometamilpages', page=data1.prev_num, _external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark {% if data1.page == 1 %}disabled{% endif %} border border-primary rounded">&laquo;
+            prev</a>
+        {% endif %}
+        {% for page_num in data1.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if page_num %}{% if data1.page == page_num %}<a
+            href="{{ url_for('gethometamilpages', page=page_num,_external=True)}}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-dark border border-primary rounded">{{ page_num }}</a>{% else %}<a
+            href="{{ url_for('gethometamilpages', page=page_num,_external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark border border-primary rounded">{{ page_num }}</a>{% endif %}{% else %} ...{%
+        endif %}
+        {% endfor %}
+        {% if data1.has_next %}
+        <a href="{{ url_for('gethometamilpages', page=data1.next_num,_external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark {% if data1.page == data1.pages %}disabled{% endif %} border border-primary rounded">next
+            &raquo; </a>
+        {% endif %}
+        <a class="btn mt-1">Showing page <button class="btn border border-primary rounded">{{ data1.page }}</button> of
+            <button class="btn border border-primary rounded">{{ data1.pages }}</button></a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

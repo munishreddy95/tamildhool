@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="row mb-1 text-center">
+    <h1>{{pagename}}</h1>
+</div>
+{% if datapage.pages > 1 %}
+<div class="row mb-1">
+    <div class="text-center">
+        {% if datapage.has_prev %}
+        <a href="{{ url_for('homeserialpage',videopage=videopagenameforslug,pageid=datapage.prev_num, _external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark {% if datapage.page == 1 %}disabled{% endif %} border border-primary rounded">&laquo;
+            prev</a>
+        {% endif %}
+        {% for page_num in datapage.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if page_num %}{% if datapage.page == page_num %}<a
+            href="{{ url_for('homeserialpage',videopage=videopagenameforslug,pageid=page_num,_external=True)}}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-dark border border-primary rounded">{{ page_num }}</a>{% else %}<a
+            href="{{ url_for('homeserialpage',videopage=videopagenameforslug,pageid=page_num,_external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark border border-primary rounded">{{ page_num }}</a>{% endif %}{% else %} ...{%
+        endif %}
+        {% endfor %}
+        {% if datapage.has_next %}
+        <a href="{{ url_for('homeserialpage',videopage=videopagenameforslug,pageid=datapage.next_num,_external=True) }}{% if request.args.get('q') %}?q={{request.args.get('q')}}{% endif %}"
+            class="btn btn-outline-dark {% if datapage.page == datapage.pages %}disabled{% endif %} border border-primary rounded">next
+            &raquo; </a>
+        {% endif %}
+        <a class="btn mt-1 pull-right">Showing page <button class="btn border border-primary rounded">{{ datapage.page
+                }}</button>
+            of
+            <button class="btn border border-primary rounded">{{ datapage.pages }}</button></a>
+    </div>
+</div>
+{% endif %}
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    {% for fetchPage in datapage.items %}
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-3 mb-5">
+        <div class="card h-100">
+            <a href="{{ url_for('homevideopage',videopageid=fetchPage.Id,pageid=1,urlslug=(fetchPage.PageName),_external=True) }}">
+                <img class="card-img-top" src="{{fetchPage.PageImage}}" alt="{{fetchPage.PageName}}" />
+            </a>
+            <div class="card-body p-2">
+                <div class="text-center">
+                    <h5 class="fw-bolder">
+                        <a class="tbh6" href="{{ url_for('homevideopage',videopageid=fetchPage.Id,pageid=1,urlslug=(fetchPage.PageName),_external=True) }}">{{fetchPage.PageName}}</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
