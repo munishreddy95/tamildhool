@@ -119,16 +119,16 @@ def homevideoview(videoid, urlslug):
             videopagedata = VideoPage.query.filter_by(Id=videodata.VideoPage).first()  
             if(videopagedata.VideoCategory == 1):
                 link = 'vijay-tv'
-                pagename = 'Vijay Tv Serials'
-                channelname = 'Vijay Tv Serials & Shows'
+                channelname = 'Vijay Tv Serials'
+                pagename = 'Vijay Tv Serials & Shows'
             elif (videopagedata.VideoCategory == 2):
                 link = 'sun-tv'
-                pagename = 'Sun Tv Serials'
-                channelname = 'Sun Tv Serials & Shows'
+                channelname = 'Sun Tv Serials'
+                pagename = 'Sun Tv Serials & Shows'
             elif (videopagedata.VideoCategory == 3):
                 link = 'zee-tamil'
-                pagename = 'Zee Tamil Tv Serials'
-                channelname = 'Zee Tamil Tv Serials & Shows'
+                channelname = 'Zee Tamil Tv Serials'
+                pagename = 'Zee Tamil Tv Serials & Shows'
             getmsgcontent = videoPageProfileContent(videopagedata.Profile,videodata.VideoDate)
             return render_template('videoview.html', data=videodata, otherepisodes=Video.query.filter_by(VideoPage=videodata.VideoPage).order_by(Video.Id.desc()).limit(4).all(), title=videodata.VideoTitle, description=videoPageProfileContent(videopagedata.Description, videodata.VideoDate), getmsgcontent=getmsgcontent, videopagedata=videopagedata, videoviewurl=url_for('homevideoview', videoid=videodata.Id, urlslug=urlsluggeneratorvideoview(videodata.VideoTitle)),link=link,pagename=pagename,channelname=channelname)
         else:
