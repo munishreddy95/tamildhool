@@ -98,8 +98,6 @@
                             <div class="dropdown-menu shadow">
                                 <div class="mega-content px-2">
                                     <div class="container-fluid">
-                                        <a class="btn btn-primary" href="{{url_for('homeserialpage',videopage='zee-tamil')}}" rel="bookmark">Zee Tamil Tv Serial &
-                                            Shows</a>
                                         <div class="row">
                                             {% for data in getzeetamiltvserials() %}
                                             <div class="col-6 col-sm-4 col-md-3 my-1 h-100"><a class="list-group-item" style="background-image:  linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url('{{data.PageImage}}');" rel="bookmark" href="{{ url_for('homevideopage',videopageid=data.Id,urlslug=urlsluggenerator(data.PageName),_external=True) }}">{{data.PageName}}</a>
