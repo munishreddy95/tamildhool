@@ -13,6 +13,11 @@
     font-size: 14px;
     font-weight: 500;
 }
+.tbviewlink {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
 html,
 body {
   height: 100%;

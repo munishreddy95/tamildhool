@@ -13,7 +13,7 @@
     <meta property="og:locale" content="en_GB" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{title|capitalize}} - TamilDhool" />
-    <meta property="og:description" content="{{description}}" />
+    <meta property="og:description" content="{{description}} - TamilDhool" />
     <meta property="og:url" content="{{ request.url }}" />
     <meta property="og:site_name" content="{{ request.host }}" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -27,6 +27,14 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'>
     <link rel="stylesheet" href="{{ url_for('static', filename='td/css/style.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VX7M4MRSE0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-VX7M4MRSE0');
+    </script>
 </head>
 <body>
     <main>
@@ -45,8 +53,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbar-content">
                     <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                        <li class="nav-item position-static px-2">
-                            <a class="nav-link" href="{{url_for('homeserialpage',videopage='sun-tv',pageid=1)}}" rel="bookmark">Sun Tv Serial</a>
+                        <li class="nav-item px-2"></li>
+                            <a class="nav-link" href="{{url_for('homechanneltamil',videopage='sun-tv')}}" rel="bookmark">Sun Tv Serial</a>
                         </li>
                         <li class="nav-item dropdown dropdown-mega position-static px-2">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
@@ -56,16 +64,15 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             {% for data in getsuntvserials() %}
-                                            <div class="col-6 col-sm-4 col-md-3 my-1 h-100"><a class="list-group-item" style="background-image:  linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url('{{data.PageImage}}');" rel="bookmark" href="{{ url_for('homevideopage',videopageid=data.Id,pageid=1,urlslug=urlsluggenerator(data.PageName),_external=True) }}">{{data.PageName}}</a></div>
+                                            <div class="col-6 col-sm-4 col-md-3 my-1 h-100"><a class="list-group-item" style="background-image:  linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url('{{data.PageImage}}');" rel="bookmark" href="{{ url_for('homevideopage',videopageid=data.Id,urlslug=urlsluggenerator(data.PageName),_external=True) }}">{{data.PageName}}</a></div>
                                             {% endfor %}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item position-static px-2">
-                            <a class="nav-link" href="{{url_for('homeserialpage',videopage='vijay-tv',pageid=1)}}" rel="bookmark">Vijay Tv
-                                Serial</a>
+                        <li class="nav-item px-2"></li>
+                        <a class="nav-link" href="{{url_for('homechanneltamil',videopage='vijay-tv')}}" rel="bookmark">Vijay Tv Serial</a>
                         </li>
                         <li class="nav-item dropdown dropdown-mega position-static px-2">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Vijay Tv</a>
@@ -75,7 +82,7 @@
                                         <div class="row">
                                             {% for data in getvijaytvserials() %}
                                             <div class="col-6 col-sm-4 col-md-3 my-1 h-100">
-                                                <a class="list-group-item" style="background-image:  linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url('{{data.PageImage}}');" rel="bookmark" href="{{ url_for('homevideopage',videopageid=data.Id,pageid=1,urlslug=urlsluggenerator(data.PageName),_external=True) }}">{{data.PageName}}</a>
+                                                <a class="list-group-item" style="background-image:  linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url('{{data.PageImage}}');" rel="bookmark" href="{{ url_for('homevideopage',videopageid=data.Id,urlslug=urlsluggenerator(data.PageName),_external=True) }}">{{data.PageName}}</a>
                                             </div>
                                             {% endfor %}
                                         </div>
@@ -83,18 +90,18 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item position-static px-2">
-                            <a class="nav-link" href="{{url_for('homeserialpage',videopage='zee-tamil',pageid=1)}}" rel="bookmark">Zee Tamil
-                                Serial</a>
+                        <li class="nav-item px-2"></li>
+                            <a class="nav-link" href="{{url_for('homechanneltamil',videopage='zee-tamil')}}" rel="bookmark">Zee Tamil Tv Serial</a>
                         </li>
                         <li class="nav-item dropdown dropdown-mega position-static px-2">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Zee Tamil</a>
                             <div class="dropdown-menu shadow">
                                 <div class="mega-content px-2">
                                     <div class="container-fluid">
+                                        <a class="btn btn-primary" href="{{url_for('homeserialpage',videopage='zee-tamil')}}" rel="bookmark">Zee Tamil Tv Serial &
+                                            Shows</a>
                                         <div class="row">
                                             {% for data in getzeetamiltvserials() %}
-                                            <div class="col-6 col-sm-4 col-md-3 my-1 h-100"><a class="list-group-item" style="background-image:  linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url('{{data.PageImage}}');" rel="bookmark" href="{{ url_for('homevideopage',videopageid=data.Id,pageid=1,urlslug=urlsluggenerator(data.PageName),_external=True) }}">{{data.PageName}}</a>
+                                            <div class="col-6 col-sm-4 col-md-3 my-1 h-100"><a class="list-group-item" style="background-image:  linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url('{{data.PageImage}}');" rel="bookmark" href="{{ url_for('homevideopage',videopageid=data.Id,urlslug=urlsluggenerator(data.PageName),_external=True) }}">{{data.PageName}}</a>
                                             </div>
                                             {% endfor %}
                                         </div>
@@ -116,6 +123,26 @@
     </main>
     <section class="py-2">
         <div class="container px-4 px-lg-5 mt-2">
+            <div class="row mb-1">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-12 px-4"><a class="nav-link text-center"
+                                href="{{url_for('homeserialpage',videopage='sun-tv')}}" rel="bookmark"><img
+                                    src="https://i.ibb.co/BPbjvXD/sun-tv.jpg" alt="Sun Tv Serial & Shows" title="Sun Tv Serial & Shows"
+                                    class="img-thumbnail"></a></div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-12 px-4"><a class="nav-link text-center"
+                                href="{{url_for('homeserialpage',videopage='vijay-tv')}}" rel="bookmark"><img
+                                    src="https://i.ibb.co/3fS5Wh4/vijay-tv.jpg" alt="Vijay Tv Serial & Shows" title="Vijay Tv Serial & Shows"
+                                    class="img-thumbnail"></a></div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-12 px-4"><a class="nav-link text-center"
+                                href="{{url_for('homeserialpage',videopage='zee-tamil')}}" rel="bookmark"><img
+                                    src="https://i.ibb.co/HXsnv5D/zee-tamil.jpg" alt="Zee Tamil Tv Serial & Shows"
+                                    title="Zee Tamil Tv Serial & Shows" class="img-thumbnail"></a></div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
             {% block content %}{% endblock %}
         </div>
     </section>

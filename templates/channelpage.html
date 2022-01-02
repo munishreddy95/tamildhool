@@ -35,13 +35,13 @@
     {% for fetchPage in datapage.items %}
     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-3 mb-5">
         <div class="card h-100">
-            <a href="{{ url_for('homevideopage',videopageid=fetchPage.Id,pageid=1,urlslug=(fetchPage.PageName),_external=True) }}">
+            <a href="{{ url_for('homevideopage',videopageid=fetchPage.Id,pageid=1,urlslug=urlsluggenerator(fetchPage.PageName),_external=True) }}">
                 <img class="card-img-top" src="{{fetchPage.PageImage}}" alt="{{fetchPage.PageName}}" />
             </a>
             <div class="card-body p-2">
                 <div class="text-center">
                     <h5 class="fw-bolder">
-                        <a class="tbh6" href="{{ url_for('homevideopage',videopageid=fetchPage.Id,pageid=1,urlslug=(fetchPage.PageName),_external=True) }}">{{fetchPage.PageName}}</a>
+                        <a class="tbh6" href="{{ url_for('homevideopage',videopageid=fetchPage.Id,pageid=1,urlslug=urlsluggenerator(fetchPage.PageName),_external=True) }}">{{fetchPage.PageName}}</a>
                     </h5>
                 </div>
             </div>

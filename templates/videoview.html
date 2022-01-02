@@ -22,8 +22,8 @@
     .h3 {
         background: red;
         color: white;
-        padding: 5px 0px;
-        width: 250px;
+        padding: 3px 0px;
+        width: 150px;
         text-align: center;
         border-radius: 3px;
     }
@@ -35,19 +35,43 @@
             <div class="row text-center">
                 <h1>{{data.VideoTitle}}</h1>
             </div>
+            <div class="row text-center">
+                <a href="{{ url_for('homevideopage',videopageid=data.videpagedetails.Id,urlslug=urlsluggenerator(data.videpagedetails.PageName),_external=True)}}" class="tbpagetitle" rel="bookmark" title="{{data.videpagedetails.PageName}}"><h5>{{data.videpagedetails.PageName}}</h5></a>
+            </div>
+            <div class="row text-center">
+                <p>{{getmsgcontent}}</p>
+            </div>
+            <div class="row text-center">
+                <p>Category : <a href="{{ url_for('homevideopage',videopageid=data.videpagedetails.Id,urlslug=urlsluggenerator(data.videpagedetails.PageName),_external=True)}}"
+                    class="tbviewlink" rel="bookmark" title="{{data.videpagedetails.PageName}}">
+                    {{data.videpagedetails.PageName}}
+                </a>, <a href="{{url_for('homeserialpage',videopage=link)}}"
+                    class="tbviewlink" rel="bookmark" title="{{pagename}}">
+                    {{pagename}},
+                </a>, <a href="{{url_for('homechanneltamil',videopage=link)}}" class="tbviewlink" rel="bookmark" title="{{channelname}}">
+                    {{channelname}},
+                </a></p>
+            </div>
             <div class="row mt-1">
                 <div align="center" class="col-md-12">
-                    <p class="h3">Video 1</p>
+                    <p class="h3">Source 1</p>
                 </div>
                 <div class="col-md-12 tdframe embed-responsive embed-responsive-16by9 mt-2">
                     {{data.VideoLink | safe}}
                 </div>
-                <!-- <div class="col-md-12 mt-3 text-center">
-                    <p class="h3">Video 2</p>
-                </div>
-                <div class="col-md-12 tdframe embed-responsive embed-responsive-16by9">
-                    {{data.VideoLink2 | safe}}
-                </div> -->
+            </div>
+            <div class="row text-center">
+                <p>Category : <a
+                    href="{{ url_for('homevideopage',videopageid=data.videpagedetails.Id,urlslug=urlsluggenerator(data.videpagedetails.PageName),_external=True)}}"
+                    class="tbviewlink" rel="bookmark" title="{{data.videpagedetails.PageName}}">
+                    {{data.videpagedetails.PageName}}
+                </a>, <a href="{{url_for('homeserialpage',videopage=link)}}" class="tbviewlink" rel="bookmark"
+                    title="{{pagename}}">
+                    {{pagename}},
+                </a>, <a href="{{url_for('homechanneltamil',videopage=link)}}" class="tbviewlink" rel="bookmark"
+                    title="{{channelname}}">
+                    {{channelname}},
+                </a></p>
             </div>
         </div>
         <div class="col-md-2"></div>

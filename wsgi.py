@@ -62,9 +62,9 @@ def gethometamilpages(page):
     getpagelist = [mk.Id for mk in VideoPage.query.filter(VideoPage.VideoCategory.in_([1, 2, 3])).all()]
     if request.args.get('q'):
         searchcontent = "%{}%".format(request.args.get('q'))
-        return render_template('tamil.html', data1=Video.query.filter(Video.VideoTitle.like(searchcontent), Video.VideoPage.in_(getpagelist)).order_by(Video.OverAllCol.desc()).paginate(page,per_page,error_out=False), currentdate=datetime, description=gettamildescription(), title=gettamiltitle(), videoviewurl='/tamil')
+        return render_template('tamil.html', data1=Video.query.filter(Video.VideoTitle.like(searchcontent), Video.VideoPage.in_(getpagelist)).order_by(Video.Id.desc()).paginate(page,per_page,error_out=False), currentdate=datetime, description=gettamildescription(), title=gettamiltitle(), videoviewurl='/tamil')
     else:
-        return render_template('tamil.html', data1=Video.query.filter(Video.VideoPage.in_(getpagelist)).order_by(Video.OverAllCol.desc()).paginate(page,per_page,error_out=False), currentdate=datetime, q='', description=gettamildescription(), title=gettamiltitle(), videoviewurl='/tamil')
+        return render_template('tamil.html', data1=Video.query.filter(Video.VideoPage.in_(getpagelist)).order_by(Video.Id.desc()).paginate(page,per_page,error_out=False), currentdate=datetime, q='', description=gettamildescription(), title=gettamiltitle(), videoviewurl='/tamil')
 
 @app.route('/')
 def homepagetamil():
@@ -72,9 +72,35 @@ def homepagetamil():
     getpagelist = [mk.Id for mk in VideoPage.query.filter(VideoPage.VideoCategory.in_([1, 2, 3])).all()]
     if request.args.get('q'):
         searchcontent = "%{}%".format(request.args.get('q'))
-        return render_template('tamil.html', data1=Video.query.filter(Video.VideoTitle.like(searchcontent), Video.VideoPage.in_(getpagelist)).order_by(Video.OverAllCol.desc()).paginate(1,per_page,error_out=False), currentdate=datetime, description=gettamildescription(), title=gettamiltitle(), videoviewurl='/tamil')
+        return render_template('tamil.html', data1=Video.query.filter(Video.VideoTitle.like(searchcontent), Video.VideoPage.in_(getpagelist)).order_by(Video.Id.desc()).paginate(1,per_page,error_out=False), currentdate=datetime, description=gettamildescription(), title=gettamiltitle(), videoviewurl='/tamil')
     else:
-        return render_template('tamil.html', data1=Video.query.filter(Video.VideoPage.in_(getpagelist)).order_by(Video.OverAllCol.desc()).paginate(1,per_page,error_out=False), currentdate=datetime, q='', description=gettamildescription(), title=gettamiltitle(), videoviewurl='/tamil')
+        return render_template('tamil.html', data1=Video.query.filter(Video.VideoPage.in_(getpagelist)).order_by(Video.Id.desc()).paginate(1,per_page,error_out=False), currentdate=datetime, q='', description=gettamildescription(), title=gettamiltitle(), videoviewurl='/tamil')
+
+@app.route('/cs/', defaults={"videopage": 1, "pageid": 1})
+@app.route('/cs/<videopage>/<int:pageid>')
+@app.route('/cs/<videopage>')
+def homechanneltamil(videopage,pageid=1):
+    if(videopage == 'sun-tv'):
+        categoryid = 2
+        title = 'suntv, sun tv, sun tv serials, free online, sun tv shows, serials,show'
+        pagename = 'Sun Tv'
+    elif (videopage == 'vijay-tv'):
+        categoryid = 1
+        title = 'vijaytv, vijay tv, vijay tv serials, free online, vijay tv shows, serials,show'
+        pagename = 'Vijay Tv'
+    elif (videopage == 'zee-tamil'):
+        categoryid = 3
+        title = 'zee tamiltv, zee tamil tv, zee tamil tv serials, free online, zee tamil tv shows, serials,show'
+        pagename = 'Zee Tamil'
+    else:
+        return render_template('404.html'), 404
+    per_page = get_page_count()
+    getpagelist = [mk.Id for mk in VideoPage.query.filter(VideoPage.VideoCategory.in_([categoryid])).all()]
+    if request.args.get('q'):
+        searchcontent = "%{}%".format(request.args.get('q'))
+        return render_template('tamil.html', data1=Video.query.filter(Video.VideoTitle.like(searchcontent), Video.VideoPage.in_(getpagelist)).order_by(Video.Id.desc()).paginate(1,per_page,error_out=False), currentdate=datetime, description=title, title=title, videoviewurl='/tamil')
+    else:
+        return render_template('tamil.html', data1=Video.query.filter(Video.VideoPage.in_(getpagelist)).order_by(Video.Id.desc()).paginate(1,per_page,error_out=False), currentdate=datetime, q='', description=title, title=title, videoviewurl='/tamil')
     
 @app.route('/v/<videoid>/<urlslug>')
 def homevideoview(videoid, urlslug):
@@ -90,12 +116,24 @@ def homevideoview(videoid, urlslug):
         
     if(videodata != None):
         if(int(videodata.VideoType) == 1 ):
-            videopagedata = VideoPage.query.filter_by(Id=videodata.VideoPage).first()    
+            videopagedata = VideoPage.query.filter_by(Id=videodata.VideoPage).first()  
+            if(videopagedata.VideoCategory == 1):
+                link = 'vijay-tv'
+                pagename = 'Vijay Tv Serials'
+                channelname = 'Vijay Tv Serials & Shows'
+            elif (videopagedata.VideoCategory == 2):
+                link = 'sun-tv'
+                pagename = 'Sun Tv Serials'
+                channelname = 'Sun Tv Serials & Shows'
+            elif (videopagedata.VideoCategory == 3):
+                link = 'zee-tamil'
+                pagename = 'Zee Tamil Tv Serials'
+                channelname = 'Zee Tamil Tv Serials & Shows'
             getmsgcontent = videoPageProfileContent(videopagedata.Profile,videodata.VideoDate)
-            return render_template('videoview.html', data=videodata, otherepisodes=Video.query.filter_by(VideoPage=videodata.VideoPage).order_by(Video.OverAllCol.desc()).limit(4).all(), title=videodata.VideoTitle, keywords=videoPageProfileContent(videopagedata.Keywords, videodata.VideoDate), description=videoPageProfileContent(videopagedata.Description, videodata.VideoDate), getmsgcontent=getmsgcontent, videopagedata=videopagedata, videoviewurl=url_for('homevideoview', videoid=videodata.Id, urlslug=urlsluggeneratorvideoview(videodata.VideoTitle)))
+            return render_template('videoview.html', data=videodata, otherepisodes=Video.query.filter_by(VideoPage=videodata.VideoPage).order_by(Video.Id.desc()).limit(4).all(), title=videodata.VideoTitle, description=videoPageProfileContent(videopagedata.Description, videodata.VideoDate), getmsgcontent=getmsgcontent, videopagedata=videopagedata, videoviewurl=url_for('homevideoview', videoid=videodata.Id, urlslug=urlsluggeneratorvideoview(videodata.VideoTitle)),link=link,pagename=pagename,channelname=channelname)
         else:
             videopagedata = VideoPage.query.filter_by(Id=videodata.VideoPage).first()    
-            return render_template('video/subvideo.html', data=videodata, otherepisodes=Video.query.filter_by(VideoPage=videodata.VideoPage).order_by(Video.OverAllCol.desc()).limit(4).all(), title=videodata.VideoTitle, keywords=videoPageProfileContent(videodata.KeyWords, videodata.VideoDate), description=videoPageProfileContent(videodata.Description, videodata.VideoDate), getmsgcontent='', videoviewurl=url_for('homevideoview', videoid=videodata.Id, urlslug=urlsluggeneratorvideoview(videodata.VideoTitle))) 
+            return render_template('video/subvideo.html', data=videodata, otherepisodes=Video.query.filter_by(VideoPage=videodata.VideoPage).order_by(Video.Id.desc()).limit(4).all(), title=videodata.VideoTitle, description=videoPageProfileContent(videodata.Description, videodata.VideoDate), getmsgcontent='', videoviewurl=url_for('homevideoview', videoid=videodata.Id, urlslug=urlsluggeneratorvideoview(videodata.VideoTitle))) 
     else:
         return render_template('404.html'), 404
 
@@ -125,16 +163,17 @@ def homeserialpage(videopage, pageid = 1):
         return render_template('channelpage.html', datapage=VideoPage.query.filter(VideoPage.VideoCategory.in_([categoryid])).order_by(VideoPage.Id.desc()).paginate(pageid,per_page,error_out=False), title=title, description=title,pagename=pagename,videopagenameforslug=videopage)
         
 
-@app.route('/p/', defaults={"videopageid": 1, "pageid": 1,"urlslug":""})
-@app.route('/p/<videopageid>/<int:pageid>/<urlslug>')
-def homevideopage(videopageid, pageid, urlslug):
+@app.route('/p/', defaults={"videopageid": 1,"urlslug":"","pageid": 1})
+@app.route('/p/<videopageid>/<urlslug>/<int:pageid>')
+@app.route('/p/<videopageid>/<urlslug>')
+def homevideopage(videopageid,urlslug, pageid=1):
     per_page = get_page_count()
     videopagedata = VideoPage.query.filter_by(Id=videopageid).first()
     if videopagedata != None:
         description = videoPageProfileContentPage(videopagedata.Description)
         if request.args.get('q'):
             searchcontent = "%{}%".format(request.args.get('q'))
-            return render_template('videoindex.html', datapage=Video.query.filter(Video.VideoTitle.like(searchcontent),Video.VideoPage.in_([videopageid])).order_by(Video.OverAllCol.desc()).paginate(pageid,per_page,error_out=False), videopageid=videopageid, title=videopagedata.PageName, keywords=videopagedata.Keywords, description=description, videopagenameforslug=urlsluggenerator(videopagedata.PageName))
+            return render_template('videoindex.html', datapage=Video.query.filter(Video.VideoTitle.like(searchcontent),Video.VideoPage.in_([videopageid])).order_by(Video.Id.desc()).paginate(pageid,per_page,error_out=False), videopageid=videopageid, title=videopagedata.PageName, keywords=videopagedata.Keywords, description=description, videopagenameforslug=urlsluggenerator(videopagedata.PageName))
         else:
             return render_template('videoindex.html', datapage=Video.query.filter(Video.VideoPage.in_([videopageid])).order_by(Video.Id.desc()).paginate(pageid,per_page,error_out=False), videopageid=videopageid, title=videopagedata.PageName, keywords=videopagedata.Keywords, description=description, videopagenameforslug=urlsluggenerator(videopagedata.PageName))
     else:

@@ -33,7 +33,7 @@
                 <a href="{{ url_for('homevideoview',videoid=fetchVideo.Id,urlslug=urlsluggenerator(fetchVideo.VideoTitle),_external=True) }}"><img class="card-img-top" src="{{fetchVideo.VideoImage}}" rel="bookmark" alt="{{fetchVideo.VideoTitle}}" /></a>
                 <div class="text-center">
                     <h5>
-                        <a class="tbpagetitle" href="{{ url_for('homevideopage',videopageid=fetchVideo.videpagedetails.Id,pageid=1,urlslug=urlsluggenerator(fetchVideo.videpagedetails.PageName),_external=True) }}">{{fetchVideo.videpagedetails.PageName}}</a>
+                        <a class="tbpagetitle" href="{{ url_for('homevideopage',videopageid=fetchVideo.videpagedetails.Id,urlslug=urlsluggenerator(fetchVideo.videpagedetails.PageName),_external=True) }}">{{fetchVideo.videpagedetails.PageName}}</a>
                     </h5>
                 </div>
                 <div class="card-body px-1 py-0">
