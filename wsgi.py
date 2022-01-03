@@ -187,7 +187,7 @@ def sitemap_index_1():
     for post in blog_posts:
         date_string = post.CreatedAt.strftime("%Y-%m-%dT%H:%M:%S+00:00")
         url = {
-            "loc":  url_for('homevideoview', videoid=post.Id, urlslug=urlsluggenerator(post.VideoTitle), _external=True),
+            "loc":  url_for('homevideoview', videoid=post.Id, urlslug=urlsluggenerator(post.VideoTitle), _external=True, _scheme='https'),
             "lastmod": date_string
         }
         dynamic_urls.append(url)
