@@ -34,9 +34,9 @@ def videoPageProfileContent(msg,videodate):
 def redirect_nonwww():
     """Redirect non-www requests to www."""
     urlparts = urlparse(request.url)
-    if urlparts.netloc == 'kikikichannel.net':
+    if urlparts.netloc == 'tamildhool.xyz':
         urlparts_list = list(urlparts)
-        urlparts_list[1] = 'www.kikikichannel.net'
+        urlparts_list[1] = 'www.tamildhool.xyz'
         return redirect(urlunparse(urlparts_list), code=301)
 
 def videoPageProfileContentPage(msg):
